@@ -1,9 +1,14 @@
 import  moment from 'moment';
+import PropTypes from 'prop-types';
+import {Events} from './Events';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+
+
 export const getDays = (monthMoment) => {
     const monthCopy = monthMoment.clone();
     monthCopy.startOf('month');
     const days = [];
-    while (monthCopy.month() == monthMoment.month()) { 
+    while (monthCopy.month() === monthMoment.month()) { 
         days.push(monthCopy.clone());
         monthCopy.add(1, 'days');   
     }
@@ -36,44 +41,55 @@ const padWeekBack = (week, padWidth = null) =>{
 
 const daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
-export const Calendar = ({month, year, onPrev, onToday, onNext}) => {
+export const Calendar = ({month, year, onPrev, onToday, onNext,}) => {
     const currentMonthMoment = moment(`${month}${year}`, 'MMYYYY');
     const today = moment(); 
     const weeks = segmentInToWeeks(getDays(currentMonthMoment));
 
     return (
-        <div>
-            
-            <div className="flex justify-between m-3">
-                <h5 className='text-xl font-bold'>{currentMonthMoment.format("MMMM YYYY")}</h5>
-                <div className='flex'>
-                    <button onClick={onPrev} className=''>◀</button>
-                    <button onClick={onToday} className='m-3'>Today</button>
-                    <button onClick={onNext} className=''>▶</button>
+       <div className='flex'>
+            <div>
+                <div className="flex justify-between border-2 mx-3 py-1">
+                    <h5 className='text-xl font-bold p-2'>{currentMonthMoment.format("MMMM YYYY")}</h5>
+                    <div className='flex px-3'>
+                        <button onClick={onPrev} className=''><FaAngleLeft /></button>
+                        <button onClick={onToday} className='mx-3'>Today</button>
+                        <button onClick={onNext} className=''><FaAngleRight /></button>
+                    </div>
                 </div>
-           </div>
-            <table className='m-3 '>
-                <thead>
-                    <tr>
-                        {daysOfTheWeek.map((day) => <th  className=' p-5 border-2' key={day}>{day}</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {weeks.map((week, index) => {
-                        const displayWeek = index === 0 ? padWeekFront(week) : padWeekBack(week);
-                        return (
-                            <tr key={index}>
-                                {displayWeek.map((day, ind) => 
-                                day ? 
-                                <td key={day.format("D")} className={day.isSame(today, 'day') ? 'current-day border-2 p-5' : 'border-2 p-5' } >
-                                    {day.format("D")}
-                                </td>:
-                                <td key={`${index}${ind}`} className='border-2 p-5'></td>)}
-                            </tr>
-                        )
-                    })}            
-                </tbody>
-            </table>
+                <table className='mx-3'>
+                    <thead>
+                        <tr>
+                            {daysOfTheWeek.map((day) => <th  className=' p-5 border-2' key={day}>{day}</th>)}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {weeks.map((week, index) => {
+                            const displayWeek = index === 0 ? padWeekFront(week) : padWeekBack(week);
+                            return (
+                                <tr key={index}>
+                                    {displayWeek.map((day, ind) => 
+                                    day ? 
+                                    <td key={day.format("D")} className={day.isSame(today, 'day') ? 'current-day border-2 p-5' : 'border-2 p-5'}  >
+                                        {day.format("D")}
+                                    </td>:
+                                    <td key={`${index}${ind}`} className='border-2 p-5'></td>)}
+                                </tr>
+                            )
+                        })}            
+                    </tbody>
+                </table>
+            </div>
+            <Events />
         </div>
     )
+}
+
+Calendar.propTypes = {
+    month: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+    onPrev: PropTypes.func.isRequired,
+    onToday: PropTypes.func.isRequired,
+    onNext: PropTypes.func.isRequired,
+    // eventDate: PropTypes.func.isRequired,
 }
