@@ -50,6 +50,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
+td:hover,td:focus{
+  background-color: #021a16;
+  color: #f1f7f7;
+  cursor: pointer;
+}
 /* button:hover {
   border-color: #646cff;
 } */

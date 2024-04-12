@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaPlus} from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import DatePicker from "react-datepicker";
-// import { Calendar } from "./Calendar";
 import "react-datepicker/dist/react-datepicker.css";
+
 export const Events = () => {
   const [events, setEvents] = useState(() => {
     const savedEvents = JSON.parse(localStorage.getItem("events")) || [];
@@ -34,11 +34,10 @@ export const Events = () => {
     },[events]);
   return (
     <>
-      {/* <Calendar eventDate={date => setSelectedDate(date)}/> */}
       <div className="border-2 w-screen">
-      <div className="flex justify-between border-b-2 px-3">
+      <div className="flex justify-between border-b-2 p-1">
         <h2 className="text-xl font-bold mt-3">Events</h2>
-        <button className="text-xl font-bold px-3" onClick={() => setShowInput(true)}> + </button>
+        <button className="text-xl font-bold px-3" onClick={() => setShowInput(true)}> <FaPlus /> </button>
       </div>
       {
         showInput && (

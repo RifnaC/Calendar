@@ -1,7 +1,6 @@
 import { Calendar } from "./Calendar";
 import { useState } from "react";
 import  moment from 'moment';
-
 export const CalendarController = () => {
     const today = moment();
     const [currentMonthMoment, setCurrentMonthMoment] = useState(today.clone());
@@ -15,10 +14,12 @@ export const CalendarController = () => {
     const decrementMonth = ()=>{
         setCurrentMonthMoment(currentMonthMoment.clone().subtract(1, 'months'));
     }
+
+    
     return (
         <div>
             <Calendar  month={currentMonthMoment.format("MM")} year={currentMonthMoment.format("YYYY")}
-             onPrev={decrementMonth} onToday={currentDay} onNext={incrementMonth}/>
+             onPrev={decrementMonth} onToday={currentDay} onNext={incrementMonth} />
         </div>
     )
 }
