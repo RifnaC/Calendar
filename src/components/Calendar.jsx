@@ -141,7 +141,7 @@ export const Calendar = ({ month, year, onPrev, onToday, onNext, }) => {
                                 className="border p-2  bg-white"
                             />
                             </div>
-                            <button className="border-1 font-bold bg-white m-1" onClick={addEvent}> Submit </button>
+                            <button className="border-0 font-bold bg-white m-1 p-2" onClick={addEvent}> Save </button>
                         </div>
                     )
                 }
@@ -149,8 +149,9 @@ export const Calendar = ({ month, year, onPrev, onToday, onNext, }) => {
                     {events.map((event, index) => (
                         <li className="flex justify-between border-b-2 p-3" key={index}>
                             <div>
+                                <span className='px-2'>{event.date}</span>
                                 <span>{event.title}</span>
-                                <span>{event.date}</span>
+                                
                             </div>
                             <div className="flex">
                                 {/* <div className="p-1"><FaEdit /></div> */}
